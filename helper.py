@@ -1,6 +1,7 @@
 import argparse
 import sys
 
+import numpy as np
 import pandas as pd
 from result import Result, Ok, Err
 
@@ -54,6 +55,8 @@ def argument_parser():
     parser.add_argument('-i', '--input', type=str, required=True, help='Path ke file input')
     parser.add_argument('-o', '--output', type=str, required=True, help='Path ke file output')
     if len(sys.argv) < 1:
-        helper.write_to_syserr(parser.print_help())
+        write_to_syserr(parser.print_help())
     args = parser.parse_args()
     return args
+
+
