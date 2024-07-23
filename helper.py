@@ -1,6 +1,7 @@
 import argparse
 import sys
 
+import pandas as pd
 from result import Result, Ok, Err
 
 
@@ -24,3 +25,25 @@ def name_and_file_type(args: argparse.Namespace, key: str) -> Result[tuple[str, 
         return Ok((arg_val, 'csv'))
 
     return Err("data type not supported")
+
+
+def open_pandas(input_file: str, file_type: str) -> Result[pd.DataFrame, str]:
+    match file_type:
+        case 'csv':
+            return Ok(pd.read_csv(input_file))
+        case 'excel':
+            return Ok(pd.read_excel(input_file))
+        case _:
+            return Err("Invalid file type")
+
+
+def write_pandas(df: pd.DataFrame, output: str, file_type: str) -> Result[str, str]:
+    match file_type:
+        case 'csv':
+            df.to_csv(output)
+            return Ok("")
+        case 'excel':
+            df.to_excel(output)
+            return Ok("")
+        case _:
+            return Err("Invalid file type")
