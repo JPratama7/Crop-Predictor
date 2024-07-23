@@ -20,6 +20,10 @@ def main():
     df = (open_pandas(file_input[0], file_input[1])
           .unwrap_or_raise("Error when opening dataset"))
 
+    df['Luas Panen'] = df['Luas Panen'].apply(helper.clean_data)
+    df['Hasil Panen'] = df['Hasil Panen'].apply(helper.clean_data)
+    df['Produktivitas'] = df['Produktivitas'].apply(helper.clean_data)
+
     write_pandas(df, output=output[0], file_type=output[1])
 
 
