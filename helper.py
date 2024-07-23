@@ -71,7 +71,7 @@ def clean_data(value):
     if value == '-':
         return np.nan
 
-    rb = value.split(",", 1)
+    rb = value.replace(" ", "").split(",", 1)
     if len(rb) > 1:
         value = rb[0] + "." + rb[1]
     elif len(rb) == 1:
