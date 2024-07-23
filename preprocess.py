@@ -1,9 +1,22 @@
 import pandas as pd
 
+from result import Result, Err, Ok
+
 import argparse
 import sys
 
 import helper
+
+
+def open_pandas(input_file: str, file_type: str) -> Result[pd.DataFrame, str]:
+    match file_type:
+        case 'csv':
+            return Ok(pd.read_csv(input_file))
+        case 'excel':
+            return Ok(pd.read_excel(input_file))
+        case _:
+            return Err("Invalid file type")
+
 
 def main():
     parser = argparse.ArgumentParser(description='Proses input dan output file.')
@@ -24,17 +37,12 @@ def main():
     if output.is_err():
         helper.write_to_syserr(file_input.unwrap_err())
 
+    file_input = file_input.unwrap()
+    output = output.unwrap()
 
-    df = pd.DataFrame()
-
-    match file_input.unwrap():
-        case "csv":
-            df = pd.read_csv(file_input.unwrap())
-        case "excel":
-            df = pd.read_excel(file_input.unwrap())
-
-
+    df = open_pandas(file_input[0], file_input[1])
     print(df)
+
 
 if __name__ == "__main__":
     main()
