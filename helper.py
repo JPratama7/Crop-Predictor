@@ -1,4 +1,5 @@
 import argparse
+import pathlib
 import sys
 
 import numpy as np
@@ -39,6 +40,9 @@ def open_pandas(input_file: str, file_type: str) -> Result[pd.DataFrame, str]:
 
 
 def write_pandas(df: pd.DataFrame, output: str, file_type: str) -> Result[str, str]:
+    if not pathlib.Path(output).parent.is_dir():
+        return Err("path error")
+
     match file_type:
         case 'csv':
             df.to_csv(output)
