@@ -60,3 +60,13 @@ def argument_parser():
     return args
 
 
+# Membuat function change data type
+def clean_data(value):
+    if not isinstance(value, str):
+        if isinstance(value, int):
+            return float(value)
+        if isinstance(value, float):
+            return value
+        return np.nan
+    if value == '-':
+        return np.nan
