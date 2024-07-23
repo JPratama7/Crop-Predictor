@@ -1,19 +1,9 @@
-import argparse
-import sys
-
 import helper
-from helper import open_pandas, write_pandas
+from helper import open_pandas, write_pandas, argument_parser
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Proses input dan output file.')
-    parser.add_argument('-i', '--input', type=str, required=True, help='Path ke file input')
-    parser.add_argument('-o', '--output', type=str, required=True, help='Path ke file output')
-
-    if len(sys.argv) < 1:
-        helper.write_to_syserr(parser.print_help())
-
-    args = parser.parse_args()
+    args = argument_parser()
 
     file_input = helper.name_and_file_type(args, 'input')
     output = helper.name_and_file_type(args, 'output')
