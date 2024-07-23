@@ -18,6 +18,18 @@ def open_pandas(input_file: str, file_type: str) -> Result[pd.DataFrame, str]:
             return Err("Invalid file type")
 
 
+def write_pandas(df: pd.DataFrame, output: str, file_type: str) -> Result[str, str]:
+    match file_type:
+        case 'csv':
+            df.to_csv(output)
+            return Ok("")
+        case 'excel':
+            df.to_excel(output)
+            return Ok("")
+        case _:
+            return Err("Invalid file type")
+
+
 def main():
     parser = argparse.ArgumentParser(description='Proses input dan output file.')
     parser.add_argument('-i', '--input', type=str, required=True, help='Path ke file input')
@@ -40,9 +52,10 @@ def main():
     file_input = file_input.unwrap()
     output = output.unwrap()
 
-    df = open_pandas(file_input[0], file_input[1])
-    print(df)
+    df = (open_pandas(file_input[0], file_input[1])
+          .unwrap_or_raise("Error when opening dataset"))
 
+    write_pandas(df, output=output[0], file_type=output[1])
 
 if __name__ == "__main__":
     main()
