@@ -47,3 +47,13 @@ def write_pandas(df: pd.DataFrame, output: str, file_type: str) -> Result[str, s
             return Ok("")
         case _:
             return Err("Invalid file type")
+
+
+def argument_parser():
+    parser = argparse.ArgumentParser(description='Proses input dan output file.')
+    parser.add_argument('-i', '--input', type=str, required=True, help='Path ke file input')
+    parser.add_argument('-o', '--output', type=str, required=True, help='Path ke file output')
+    if len(sys.argv) < 1:
+        helper.write_to_syserr(parser.print_help())
+    args = parser.parse_args()
+    return args
